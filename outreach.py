@@ -34,8 +34,9 @@ def is_valid_email(email):
 
 # === TIME WINDOW ===
 def is_within_sending_window():
-    now = datetime.now()
-    return now.hour == 9  # Between 9:00 and 9:59 AM
+    return True  # Override for testing
+    # now = datetime.now()
+    # return now.hour == 9  # Between 9:00 and 9:59 AM
 
 def wait_until_9am():
     while True:
@@ -64,6 +65,7 @@ except FileNotFoundError:
 
 df = df.drop_duplicates(subset=['School Email Address'])
 df = df[df['School Email Address'].notna()]
+df = df[df['School Email Address'].str.contains("@", na=False)]
 df = df[~df['School Email Address'].isin(sent_log.keys())]
 
 print(f"📬 [INFO] {len(df)} valid, unsent contacts to process")
@@ -116,11 +118,50 @@ for index, row in df.iterrows():
     district = row['District Name']
 
     subject = f"HallHop – Digital Hall Pass for {district}"
-    body_plain = f"""Dear {principal}, ...
+    body_plain = f"""Dear {principal},
 
-(Shortened for brevity. You already have full HTML/plainbody here.)"""
+My name is Varun, and I’m a high school junior in Round Rock and the founder of HallHop — a student-built, privacy-conscious digital hall pass system created to help schools like those in {district} modernize hallway management without needing expensive tech or complicated systems.
 
-    body_html = f"""<html> ... </html>"""
+HallHop helps staff track hallway activity in real time, reduce disruptions, and increase student accountability — all while keeping things simple and transparent for everyone.
+
+I truly believe tools like this can make a meaningful difference, and I’d love to share it with your campus. You can learn more or request access at https://hallhop.com, or just reply to this message — I’m always happy to answer questions personally.
+
+Thank you so much for the work you do to support students and your school. I’d be excited for the chance to support your efforts in any way I can.
+
+If you'd prefer not to receive future updates, just reply with "unsubscribe".
+
+Warmly,  
+Varun Bhadurgatte Nagaraj  
+512-212-6269  
+HallHop Founder & CEO  
+Junior at Round Rock High School  
+hallhop.com – making hallways safer and smarter
+"""
+
+    body_html = f"""\
+<html>
+  <body style="font-family: Arial, sans-serif; color: #333;">
+    <p>Dear {principal},</p>
+
+    <p>My name is Varun, and I’m a high school junior in Round Rock and the founder of <strong>HallHop</strong> — a student-built, privacy-conscious digital hall pass system created to help schools like those in <strong>{district}</strong> modernize hallway management without needing expensive tech or complicated systems.</p>
+
+    <p>HallHop helps staff track hallway activity in real time, reduce disruptions, and increase student accountability — all while keeping things simple and transparent for everyone.</p>
+
+    <p>I truly believe tools like this can make a meaningful difference, and I’d love to share it with your campus. You can learn more or request access at <a href="https://hallhop.com">hallhop.com</a>, or just reply to this message — I’m always happy to answer questions personally.</p>
+
+    <p><em>If you'd prefer not to receive future updates, just reply with "unsubscribe".</em></p>
+
+    <p>
+      Warmly,<br>
+      Varun Bhadurgatte Nagaraj<br>
+      512-212-6269<br>
+      HallHop Founder & CEO<br>
+      Junior at Round Rock High School<br>
+      <a href="https://hallhop.com">hallhop.com</a> – making hallways safer and smarter
+    </p>
+  </body>
+</html>
+"""
 
     msg = MIMEMultipart("alternative")
     msg['From'] = formataddr(("Varun Bhadurgatte Nagaraj", EMAIL_ADDRESS))
