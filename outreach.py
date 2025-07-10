@@ -16,7 +16,7 @@ EMAIL_ADDRESS = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
 
 # === CONFIGURATION ===
-CSV_FILE = "/Users/varunbhadurgattenagaraj/Downloads/HallHop/HallHop OutReach/Directory.csv"
+CSV_FILE = "Directory.csv"
 LOG_FILE = "sent_log.json"
 ERROR_LOG_FILE = "error_log.json"
 SMTP_SERVER = "smtp.gmail.com"
