@@ -23,6 +23,7 @@ SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 DELAY_SECONDS = 10
 
+print("Starting outreach")
 # === EMAIL VALIDATION ===
 def is_valid_email(email):
     return bool(re.match(r"[^@]+@[^@]+\.[^@]+", email))
