@@ -1,14 +1,632 @@
 {
   "admin1@cayugaisd.com": {
-    "principal": "JAY THOMPSON   ",
-    "district": "CAYUGA ISD",
-    "subject": "HallHop \u2013 Digital Hall Pass for CAYUGA ISD",
+    "principal": "Jay Thompson",
+    "district": "Cayuga Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Cayuga Isd",
     "date": "2025-07-10"
   },
   "hneugebauer@elkhartisd.org": {
-    "principal": "BRANDI MCENTRUFF   ",
-    "district": "ELKHART ISD",
-    "subject": "HallHop \u2013 Digital Hall Pass for ELKHART ISD",
+    "principal": "Brandi Mcentruff",
+    "district": "Elkhart Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Elkhart Isd",
     "date": "2025-07-10"
+  },
+  "rglenn@elkhartisd.org": {
+    "principal": "Principal",
+    "district": "Elkhart Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Elkhart Isd",
+    "date": "2025-07-10"
+  },
+  "sfox@elkhartisd.org": {
+    "principal": "Mr. Roger Mays",
+    "district": "Elkhart Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Elkhart Isd",
+    "date": "2025-07-10"
+  },
+  "ddancer@elkhartisd.org": {
+    "principal": "Mrs. Susan Nunley",
+    "district": "Elkhart Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Elkhart Isd",
+    "date": "2025-07-10"
+  },
+  "ccrawford@elkhartisd.org": {
+    "principal": "Mr. Herring",
+    "district": "Elkhart Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Elkhart Isd",
+    "date": "2025-07-10"
+  },
+  "contact@frankstonisd.net": {
+    "principal": "Principal",
+    "district": "Frankston Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Frankston Isd",
+    "date": "2025-07-10"
+  },
+  "CORY.HINES@NECHESISD.NET": {
+    "principal": "Ms. Batchelor",
+    "district": "Neches Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Neches Isd",
+    "date": "2025-07-10"
+  },
+  "treeves@palestineschools.org": {
+    "principal": "Mrs. Reeves",
+    "district": "Palestine Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Palestine Isd",
+    "date": "2025-07-10"
+  },
+  "jmason@palestineschools.org": {
+    "principal": "Mr. Mason",
+    "district": "Palestine Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Palestine Isd",
+    "date": "2025-07-10"
+  },
+  "tpridgen@palestineschools.org": {
+    "principal": "Mrs. Pridgen",
+    "district": "Palestine Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Palestine Isd",
+    "date": "2025-07-10"
+  },
+  "sbradley@palestineschools.org": {
+    "principal": "Mrs. Bradley",
+    "district": "Palestine Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Palestine Isd",
+    "date": "2025-07-10"
+  },
+  "lshead@palestineschools.org": {
+    "principal": "Mrs. Shead",
+    "district": "Palestine Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Palestine Isd",
+    "date": "2025-07-10"
+  },
+  "gmancilla@palestineschools.org": {
+    "principal": "Mrs. Mancilla",
+    "district": "Palestine Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Palestine Isd",
+    "date": "2025-07-10"
+  },
+  "ssnettles@westwoodisd.net": {
+    "principal": "Mrs. Johnson",
+    "district": "Westwood Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Westwood Isd",
+    "date": "2025-07-10"
+  },
+  "sbrown@westwoodisd.net": {
+    "principal": "Mrs. Huddleston",
+    "district": "Westwood Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Westwood Isd",
+    "date": "2025-07-10"
+  },
+  "ssforeman@westwoodisd.net": {
+    "principal": "Mrs. Warren",
+    "district": "Westwood Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Westwood Isd",
+    "date": "2025-07-10"
+  },
+  "cjmay@westwoodisd.net": {
+    "principal": "Principal",
+    "district": "Westwood Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Westwood Isd",
+    "date": "2025-07-10"
+  },
+  "clasiter@slocumisd.org": {
+    "principal": "Principal",
+    "district": "Slocum Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Slocum Isd",
+    "date": "2025-07-10"
+  },
+  "gkellum@slocumisd.org": {
+    "principal": "Principal",
+    "district": "Slocum Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Slocum Isd",
+    "date": "2025-07-10"
+  },
+  "jcarranco@andrews.esc18.net": {
+    "principal": "Mr. Huddleston",
+    "district": "Andrews Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Andrews Isd",
+    "date": "2025-07-10"
+  },
+  "cjohnson@andrews.esc18.net": {
+    "principal": "Mr. Johnson",
+    "district": "Andrews Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Andrews Isd",
+    "date": "2025-07-10"
+  },
+  "dlowder@andrews.esc18.net": {
+    "principal": "Mr. Lowder",
+    "district": "Andrews Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Andrews Isd",
+    "date": "2025-07-10"
+  },
+  "aroman@andrews.esc18.net": {
+    "principal": "Mr. Roman",
+    "district": "Andrews Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Andrews Isd",
+    "date": "2025-07-10"
+  },
+  "snetopski@andrews.esc18.net": {
+    "principal": "Mrs. Netopski",
+    "district": "Andrews Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Andrews Isd",
+    "date": "2025-07-10"
+  },
+  "lmarroquin@andrews.esc18.net": {
+    "principal": "Principal",
+    "district": "Andrews Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Andrews Isd",
+    "date": "2025-07-10"
+  },
+  "chardin@pcacharter.net": {
+    "principal": "Principal",
+    "district": "Pineywoods Community Academy",
+    "subject": "HallHop \u2013 Digital Hall Pass for Pineywoods Community Academy",
+    "date": "2025-07-10"
+  },
+  "swalters@pcacharter.net": {
+    "principal": "Principal",
+    "district": "Pineywoods Community Academy",
+    "subject": "HallHop \u2013 Digital Hall Pass for Pineywoods Community Academy",
+    "date": "2025-07-10"
+  },
+  "karen.vinson@pcacharter.net": {
+    "principal": "Principal",
+    "district": "Pineywoods Community Academy",
+    "subject": "HallHop \u2013 Digital Hall Pass for Pineywoods Community Academy",
+    "date": "2025-07-10"
+  },
+  "crenshawrl@hudsonisd.org": {
+    "principal": "Mr. Westbrook",
+    "district": "Hudson Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Hudson Isd",
+    "date": "2025-07-10"
+  },
+  "brentmcclain@stubblefieldlc.org": {
+    "principal": "Mr. Mcclain",
+    "district": "Hudson Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Hudson Isd",
+    "date": "2025-07-10"
+  },
+  "davisj@hudsonisd.org": {
+    "principal": "Mr. Mcclenny",
+    "district": "Hudson Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Hudson Isd",
+    "date": "2025-07-10"
+  },
+  "lauramikeal@hudsonisd.org": {
+    "principal": "Mrs. Mikeal",
+    "district": "Hudson Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Hudson Isd",
+    "date": "2025-07-10"
+  },
+  "kimberlymccoy@hudsonisd.org": {
+    "principal": "Mrs. Mccoy",
+    "district": "Hudson Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Hudson Isd",
+    "date": "2025-07-10"
+  },
+  "juliemcmanus@lufkinisd.org": {
+    "principal": "Mrs. Mcmanus",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "akcraft@lufkinisd.org": {
+    "principal": "Mr. Craft",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "acmijares@lufkinisd.org": {
+    "principal": "Mr. Mijares",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "hnreid@lufkinisd.org": {
+    "principal": "Ms. Reid",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "pdmcclendon@lufkinisd.org": {
+    "principal": "Ms. Mcclendon",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "cstewart@lufkinisd.org": {
+    "principal": "Mrs. Stewart",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "shill@lufkinisd.org": {
+    "principal": "Mrs. Hill",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "dmslaughter@lufkinisd.org": {
+    "principal": "Principal",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "kproutt@lufkinisd.org": {
+    "principal": "Mrs. Proutt",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "agentry@lufkinisd.org": {
+    "principal": "Mrs. Gentry",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "rnash@lufkinisd.org": {
+    "principal": "Ms. Nash",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "dwhisenant@lufkinisd.org": {
+    "principal": "Mr. Whisenant",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "thenderson@lufkinisd.org": {
+    "principal": "Ms. Henderson",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "yclifton@lufkinisd.org": {
+    "principal": "Mrs. Clifton",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "dharrison@lufkinisd.org": {
+    "principal": "Principal",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "mgorman@angelinacounty.net": {
+    "principal": "Principal",
+    "district": "Lufkin Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lufkin Isd",
+    "date": "2025-07-10"
+  },
+  "cfiaschetti@huntingtonisd.com": {
+    "principal": "Mr. Stover",
+    "district": "Huntington Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Huntington Isd",
+    "date": "2025-07-10"
+  },
+  "jclements@dibollisd.org": {
+    "principal": "Mrs. Stephens",
+    "district": "Diboll Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Diboll Isd",
+    "date": "2025-07-10"
+  },
+  "dlopez@dibollisd.org": {
+    "principal": "Principal",
+    "district": "Diboll Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Diboll Isd",
+    "date": "2025-07-10"
+  },
+  "jbollich@dibollisd.org": {
+    "principal": "Mr. Bollich",
+    "district": "Diboll Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Diboll Isd",
+    "date": "2025-07-10"
+  },
+  "nmiller@dibollisd.org": {
+    "principal": "Principal",
+    "district": "Diboll Isd",
+    "subject": "HallHop \u2013 Digital Hall Pass for Diboll Isd",
+    "date": "2025-07-10"
+  },
+  "zcrawford@zavallaisd.org": {
+    "principal": "Mr. Vaughan",
+    "school": "Zavalla H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Zavalla H S",
+    "date": "2025-07-11"
+  },
+  "musgrover@centralisd.com": {
+    "principal": "Principal",
+    "school": "Central H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Central H S",
+    "date": "2025-07-11"
+  },
+  "sdarmstadter@consolidated.net": {
+    "principal": "Principal",
+    "school": "Stubblefield Lrn Ctr",
+    "subject": "HallHop \u2013 Digital Hall Pass for Stubblefield Lrn Ctr",
+    "date": "2025-07-11"
+  },
+  "hinesr@centralisd.com": {
+    "principal": "Principal",
+    "school": "Central J H",
+    "subject": "HallHop \u2013 Digital Hall Pass for Central J H",
+    "date": "2025-07-11"
+  },
+  "wrighta@centralisd.com": {
+    "principal": "Mrs. Wright",
+    "school": "Central El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Central El",
+    "date": "2025-07-11"
+  },
+  "abible@rfisd.us": {
+    "principal": "Principal",
+    "school": "Rockport-Fulton H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Rockport-Fulton H S",
+    "date": "2025-07-11"
+  },
+  "jcarter@rfisd.us": {
+    "principal": "Principal",
+    "school": "Rockport-Fulton Middle",
+    "subject": "HallHop \u2013 Digital Hall Pass for Rockport-Fulton Middle",
+    "date": "2025-07-11"
+  },
+  "lcox@rfisd.us": {
+    "principal": "Mrs. Cox",
+    "school": "Fulton El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Fulton El",
+    "date": "2025-07-11"
+  },
+  "dpoland@rfisd.us": {
+    "principal": "Mrs. Poland",
+    "school": "Live Oak Learning Center",
+    "subject": "HallHop \u2013 Digital Hall Pass for Live Oak Learning Center",
+    "date": "2025-07-11"
+  },
+  "jkrenek@archercityisd.net": {
+    "principal": "Principal",
+    "school": "Archer City H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Archer City H S",
+    "date": "2025-07-11"
+  },
+  "ahusemann@archercityisd.net": {
+    "principal": "Principal",
+    "school": "Archer City El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Archer City El",
+    "date": "2025-07-11"
+  },
+  "bruce.patterson@hollidayisd.net": {
+    "principal": "Mr. Patterson",
+    "school": "Holliday H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Holliday H S",
+    "date": "2025-07-11"
+  },
+  "clay.strealy@hollidayisd.net": {
+    "principal": "Principal",
+    "school": "Holliday Middle",
+    "subject": "HallHop \u2013 Digital Hall Pass for Holliday Middle",
+    "date": "2025-07-11"
+  },
+  "mariah.sutherland@hollidayisd.net": {
+    "principal": "Principal",
+    "school": "Holliday El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Holliday El",
+    "date": "2025-07-11"
+  },
+  "daniel.williams@windthorstisd.net": {
+    "principal": "Principal",
+    "school": "Windthorst H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Windthorst H S",
+    "date": "2025-07-11"
+  },
+  "ashley.schoreder@windthoristisd.net": {
+    "principal": "Mrs. Schroeder",
+    "school": "Windthorst El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Windthorst El",
+    "date": "2025-07-11"
+  },
+  "brandon.holland@claudeisd.net": {
+    "principal": "Principal",
+    "school": "Claude Schools",
+    "subject": "HallHop \u2013 Digital Hall Pass for Claude Schools",
+    "date": "2025-07-11"
+  },
+  "snix@charlotteisd.org": {
+    "principal": "Ms. Nix",
+    "school": "Charlotte H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Charlotte H S",
+    "date": "2025-07-11"
+  },
+  "rsolis@charlotteisd.org": {
+    "principal": "Ms. Woodlee",
+    "school": "Atascosa Co Alter",
+    "subject": "HallHop \u2013 Digital Hall Pass for Atascosa Co Alter",
+    "date": "2025-07-11"
+  },
+  "dale.gonzales@charlotteisd.org": {
+    "principal": "Ms. Bunsen",
+    "school": "Charlotte Middle",
+    "subject": "HallHop \u2013 Digital Hall Pass for Charlotte Middle",
+    "date": "2025-07-11"
+  },
+  "lstevens@charlotteisd.org": {
+    "principal": "Ms. Stevens",
+    "school": "Charlotte El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Charlotte El",
+    "date": "2025-07-11"
+  },
+  "jsaunders@jisdtx.us": {
+    "principal": "Mr. Saunders",
+    "school": "Jourdanton H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Jourdanton H S",
+    "date": "2025-07-11"
+  },
+  "tcanter@jisdtx.us": {
+    "principal": "Mr. Thornton",
+    "school": "The Larry Brown School",
+    "subject": "HallHop \u2013 Digital Hall Pass for The Larry Brown School",
+    "date": "2025-07-11"
+  },
+  "sneumann@jisdtx.us": {
+    "principal": "Principal",
+    "school": "Jourdanton J H",
+    "subject": "HallHop \u2013 Digital Hall Pass for Jourdanton J H",
+    "date": "2025-07-11"
+  },
+  "dzamzow@jisdtx.us": {
+    "principal": "Principal",
+    "school": "Jourdanton El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Jourdanton El",
+    "date": "2025-07-11"
+  },
+  "cgallegos@jisdtx.us": {
+    "principal": "Principal",
+    "school": "Jourdanton Ecc",
+    "subject": "HallHop \u2013 Digital Hall Pass for Jourdanton Ecc",
+    "date": "2025-07-11"
+  },
+  "dustin.breithaupt@lytleisd.org": {
+    "principal": "Ms. Reyes",
+    "school": "Lytle Daep",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lytle Daep",
+    "date": "2025-07-11"
+  },
+  "jthornton@atascosajuv.com": {
+    "principal": "Mr. Thornton",
+    "school": "Jjaep",
+    "subject": "HallHop \u2013 Digital Hall Pass for Jjaep",
+    "date": "2025-07-11"
+  },
+  "jennifer.sprenger@lytleisd.org": {
+    "principal": "Mrs. Sprenger",
+    "school": "Lytle J H",
+    "subject": "HallHop \u2013 Digital Hall Pass for Lytle J H",
+    "date": "2025-07-11"
+  },
+  "aportillo@pisd.us": {
+    "principal": "Mr. Hinojosa",
+    "school": "Pleasanton H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Pleasanton H S",
+    "date": "2025-07-11"
+  },
+  "klvickers@pisd.us": {
+    "principal": "Principal",
+    "school": "Pleasanton J H",
+    "subject": "HallHop \u2013 Digital Hall Pass for Pleasanton J H",
+    "date": "2025-07-11"
+  },
+  "aacevedo@pisd.us": {
+    "principal": "Mrs. Acevedo",
+    "school": "Pleasanton El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Pleasanton El",
+    "date": "2025-07-11"
+  },
+  "dminniear@pisd.us": {
+    "principal": "Ms. Minnier",
+    "school": "Pleasanton Pri",
+    "subject": "HallHop \u2013 Digital Hall Pass for Pleasanton Pri",
+    "date": "2025-07-11"
+  },
+  "ctalley@poteetisd.org": {
+    "principal": "Principal",
+    "school": "Poteet H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Poteet H S",
+    "date": "2025-07-11"
+  },
+  "dcarnes@poteetisd.org": {
+    "principal": "Principal",
+    "school": "Poteet J H",
+    "subject": "HallHop \u2013 Digital Hall Pass for Poteet J H",
+    "date": "2025-07-11"
+  },
+  "dmiller@poteetisd.org": {
+    "principal": "Mrs. Miller",
+    "school": "Poteet El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Poteet El",
+    "date": "2025-07-11"
+  },
+  "kmurray@poteetisd.org": {
+    "principal": "Mrs. Murray",
+    "school": "Poteet Int",
+    "subject": "HallHop \u2013 Digital Hall Pass for Poteet Int",
+    "date": "2025-07-11"
+  },
+  "cholloman@bellvilleisd.org": {
+    "principal": "Mr. Dristas",
+    "school": "Bellville H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Bellville H S",
+    "date": "2025-07-11"
+  },
+  "mcoopersmith@bellvilleisd.org": {
+    "principal": "Principal",
+    "school": "Spicer Alter Ed Ctr",
+    "subject": "HallHop \u2013 Digital Hall Pass for Spicer Alter Ed Ctr",
+    "date": "2025-07-11"
+  },
+  "dsymm@bellvilleisd.org": {
+    "principal": "Mr. Symm",
+    "school": "Bellville J H",
+    "subject": "HallHop \u2013 Digital Hall Pass for Bellville J H",
+    "date": "2025-07-11"
+  },
+  "djones@bellvilleisd.org": {
+    "principal": "Ms. Nipp",
+    "school": "O'Bryant Pri",
+    "subject": "HallHop \u2013 Digital Hall Pass for O'Bryant Pri",
+    "date": "2025-07-11"
+  },
+  "njones@bellvilleisd.org": {
+    "principal": "Mrs. Capps",
+    "school": "O'Bryant Int",
+    "subject": "HallHop \u2013 Digital Hall Pass for O'Bryant Int",
+    "date": "2025-07-11"
+  },
+  "thancock@bellvilleisd.org": {
+    "principal": "Principal",
+    "school": "West End El",
+    "subject": "HallHop \u2013 Digital Hall Pass for West End El",
+    "date": "2025-07-11"
+  },
+  "information@sealyisd.com": {
+    "principal": "Ms. Oliver",
+    "school": "Sealy H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Sealy H S",
+    "date": "2025-07-11"
+  },
+  "cmccain@brazosisd.net": {
+    "principal": "Mr. Hudgins",
+    "school": "Brazos H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Brazos H S",
+    "date": "2025-07-11"
+  },
+  "chudgins@brazosisd.net": {
+    "principal": "Mr. Graham",
+    "school": "Brazos Middle",
+    "subject": "HallHop \u2013 Digital Hall Pass for Brazos Middle",
+    "date": "2025-07-11"
+  },
+  "ketheridge@brazosisd.net": {
+    "principal": "Mrs. Etheridge",
+    "school": "Brazos El",
+    "subject": "HallHop \u2013 Digital Hall Pass for Brazos El",
+    "date": "2025-07-11"
+  },
+  "misd@muleshoeisd.net": {
+    "principal": "Mrs. Bessire",
+    "school": "Muleshoe H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Muleshoe H S",
+    "date": "2025-07-11"
+  },
+  "lindsey.kunz@medinaisd.org": {
+    "principal": "Principal",
+    "school": "Medina School",
+    "subject": "HallHop \u2013 Digital Hall Pass for Medina School",
+    "date": "2025-07-11"
+  },
+  "kvogel@banderaisd.net": {
+    "principal": "Principal",
+    "school": "Bandera H S",
+    "subject": "HallHop \u2013 Digital Hall Pass for Bandera H S",
+    "date": "2025-07-11"
   }
 }

@@ -4,6 +4,7 @@ import time
 import os
 import json
 import re
+import string
 from dotenv import load_dotenv
 from datetime import datetime
 from email.mime.text import MIMEText
@@ -11,6 +12,44 @@ from email.mime.multipart import MIMEMultipart
 from email.utils import formataddr
 
 print("🚀 [INFO] Starting outreach script...")
+
+# === HELPER FUNCTIONS ===
+def is_valid_email(email):
+    return bool(re.match(r"[^@]+@[^@]+\.[^@]+", email))
+
+def format_name(name):
+    name = name.strip()
+    if not name:
+        return "Principal"
+
+    name_parts = name.split()
+    if not name_parts:
+        return "Principal"
+
+    prefix = name_parts[0].upper()
+    last_name = name_parts[-1].capitalize()
+
+    if prefix == "MR":
+        return f"Mr. {last_name}"
+    elif prefix == "MRS":
+        return f"Mrs. {last_name}"
+    elif prefix == "MS":
+        return f"Ms. {last_name}"
+    else:
+        return "Principal"
+
+def is_within_sending_window():
+    return True  # Override for testing
+    # now = datetime.now()
+    # return now.hour == 9
+
+def wait_until_9am():
+    while True:
+        now = datetime.now()
+        if now.hour == 9:
+            break
+        print(f"⏳ Waiting for 9:00 AM... Current time: {now.strftime('%H:%M:%S')}")
+        time.sleep(60)
 
 # === LOAD .env CREDENTIALS ===
 load_dotenv()
@@ -27,24 +66,6 @@ ERROR_LOG_FILE = "error_log.json"
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 DELAY_SECONDS = 10
-
-# === EMAIL VALIDATION ===
-def is_valid_email(email):
-    return bool(re.match(r"[^@]+@[^@]+\.[^@]+", email))
-
-# === TIME WINDOW ===
-def is_within_sending_window():
-    return True  # Override for testing
-    # now = datetime.now()
-    # return now.hour == 9  # Between 9:00 and 9:59 AM
-
-def wait_until_9am():
-    while True:
-        now = datetime.now()
-        if now.hour == 9:
-            break
-        print(f"⏳ Waiting for 9:00 AM... Current time: {now.strftime('%H:%M:%S')}")
-        time.sleep(60)
 
 # === LOAD SENT LOG ===
 if os.path.exists(LOG_FILE):
@@ -109,18 +130,18 @@ for index, row in df.iterrows():
         print("✅ [INFO] Daily send limit reached.")
         break
 
-    to_email = row['School Email Address']
+    to_email = row.get('School Email Address')
     if not is_valid_email(to_email):
         print(f"⚠️ [WARN] Skipping invalid email: {to_email}")
         continue
 
-    principal = row['School Principal'] if pd.notna(row['School Principal']) else "Principal"
-    district = row['District Name']
+    principal = format_name(row.get('School Principal', '').strip())
+    school_name = row.get('School Name', '').strip().title() or "your school"
 
-    subject = f"HallHop – Digital Hall Pass for {district}"
+    subject = f"HallHop – Digital Hall Pass for {school_name}"
     body_plain = f"""Dear {principal},
 
-My name is Varun, and I’m a high school junior in Round Rock and the founder of HallHop — a student-built, privacy-conscious digital hall pass system created to help schools like those in {district} modernize hallway management without needing expensive tech or complicated systems.
+My name is Varun, and I’m a high school junior in Round Rock and the founder of HallHop — a student-built, privacy-conscious digital hall pass system created to help schools like {school_name} modernize hallway management without needing expensive tech or complicated systems.
 
 HallHop helps staff track hallway activity in real time, reduce disruptions, and increase student accountability — all while keeping things simple and transparent for everyone.
 
@@ -143,7 +164,7 @@ hallhop.com – making hallways safer and smarter
   <body style="font-family: Arial, sans-serif; color: #333;">
     <p>Dear {principal},</p>
 
-    <p>My name is Varun, and I’m a high school junior in Round Rock and the founder of <strong>HallHop</strong> — a student-built, privacy-conscious digital hall pass system created to help schools like those in <strong>{district}</strong> modernize hallway management without needing expensive tech or complicated systems.</p>
+    <p>My name is Varun, and I’m a high school junior in Round Rock and the founder of <strong>HallHop</strong> — a student-built, privacy-conscious digital hall pass system created to help schools like <strong>{school_name}</strong> modernize hallway management without needing expensive tech or complicated systems.</p>
 
     <p>HallHop helps staff track hallway activity in real time, reduce disruptions, and increase student accountability — all while keeping things simple and transparent for everyone.</p>
 
@@ -177,13 +198,12 @@ hallhop.com – making hallways safer and smarter
         print("✅ success")
         sent_log[to_email] = {
             "principal": principal,
-            "district": district,
+            "school": school_name,
             "subject": subject,
             "date": now.strftime("%Y-%m-%d")
         }
         sent_count += 1
 
-        # Save after each send
         with open(LOG_FILE, 'w') as f:
             json.dump(sent_log, f, indent=2)
 
