@@ -1,10 +1,22 @@
+# === CONFIGURATION ===
+SEND_START_HOUR = 11         # Time window start (24-hr format)
+SEND_END_HOUR = 12           # Time window end (24-hr format)
+DELAY_BETWEEN_EMAILS = 10    # Delay between emails (in seconds)
+MAX_EMAILS_PER_RUN = 110      # Max emails to send in this script run
+
+CSV_FILE = "Directory.csv"
+LOG_FILE = "sent_log.json"
+ERROR_LOG_FILE = "error_log.json"
+SMTP_SERVER = "smtp.gmail.com"
+SMTP_PORT = 587
+
+# === LIBRARIES ===
 import pandas as pd
 import smtplib
 import time
 import os
 import json
 import re
-import string
 from dotenv import load_dotenv
 from datetime import datetime
 from email.mime.text import MIMEText
@@ -39,33 +51,25 @@ def format_name(name):
         return "Principal"
 
 def is_within_sending_window():
-    return True  # Override for testing
-    # now = datetime.now()
-    # return now.hour == 9
+    now = datetime.now()
+    return SEND_START_HOUR <= now.hour < SEND_END_HOUR
 
-def wait_until_9am():
+def wait_until_start_time():
     while True:
         now = datetime.now()
-        if now.hour == 9:
+        if is_within_sending_window():
+            print(f"⏰ [INFO] Within sending window ({SEND_START_HOUR}:00–{SEND_END_HOUR}:00). Starting...")
             break
-        print(f"⏳ Waiting for 9:00 AM... Current time: {now.strftime('%H:%M:%S')}")
+        print(f"⏳ [WAIT] Waiting until sending window ({SEND_START_HOUR}:00–{SEND_END_HOUR}:00)... Current time: {now.strftime('%H:%M:%S')}")
         time.sleep(60)
 
-# === LOAD .env CREDENTIALS ===
+# === LOAD ENVIRONMENT ===
 load_dotenv()
 EMAIL_ADDRESS = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
 
 print(f"🔐 [INFO] EMAIL_USER loaded: {'✔️' if EMAIL_ADDRESS else '❌ MISSING'}")
 print(f"🔐 [INFO] EMAIL_PASS loaded: {'✔️' if EMAIL_PASSWORD else '❌ MISSING'}")
-
-# === CONFIGURATION ===
-CSV_FILE = "Directory.csv"
-LOG_FILE = "sent_log.json"
-ERROR_LOG_FILE = "error_log.json"
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
-DELAY_SECONDS = 10
 
 # === LOAD SENT LOG ===
 if os.path.exists(LOG_FILE):
@@ -79,7 +83,7 @@ else:
 # === LOAD CONTACTS ===
 try:
     df = pd.read_csv(CSV_FILE)
-    print(f"📋 [INFO] Loaded {len(df)} total rows from {CSV_FILE}")
+    print(f"📋 [INFO] Loaded {len(df)} rows from {CSV_FILE}")
 except FileNotFoundError:
     print(f"❌ [ERROR] CSV file not found: {CSV_FILE}")
     exit(1)
@@ -91,17 +95,20 @@ df = df[~df['School Email Address'].isin(sent_log.keys())]
 
 print(f"📬 [INFO] {len(df)} valid, unsent contacts to process")
 
-# === SCALE DAILY LIMIT BASED ON PROGRESS ===
+# === DAILY LIMIT ADJUSTMENT ===
 base_limit = 20
 total_days = len(set([v.get("date") for v in sent_log.values() if "date" in v]))
 DAILY_LIMIT = min(200, base_limit + total_days * 30)
+MAX_LIMIT = min(DAILY_LIMIT, MAX_EMAILS_PER_RUN)
 
-print(f"📊 [INFO] Daily send limit based on warm-up: {DAILY_LIMIT} emails")
+print(f"📊 [INFO] Sending window: {SEND_START_HOUR}:00–{SEND_END_HOUR}:00")
+print(f"📊 [INFO] Delay between emails: {DELAY_BETWEEN_EMAILS}s")
+print(f"📊 [INFO] Daily warm-up limit: {DAILY_LIMIT} | Max for this run: {MAX_LIMIT}")
 
-# === WAIT UNTIL 9AM TO START ===
-wait_until_9am()
+# === WAIT FOR TIME WINDOW ===
+wait_until_start_time()
 
-# === CONNECT TO SMTP ===
+# === CONNECT TO SMTP SERVER ===
 print("🌐 [INFO] Connecting to SMTP server...")
 try:
     server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
@@ -109,13 +116,13 @@ try:
     server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
     print("✅ [INFO] SMTP login successful.")
 except smtplib.SMTPAuthenticationError:
-    print("❌ [ERROR] SMTP authentication failed. Check your .env or GitHub Secrets.")
+    print("❌ [ERROR] SMTP authentication failed. Check your credentials.")
     exit(1)
 except Exception as e:
     print(f"❌ [ERROR] SMTP connection error: {e}")
     exit(1)
 
-# === EMAIL LOOP ===
+# === BEGIN EMAIL OUTREACH LOOP ===
 sent_count = 0
 error_log = {}
 
@@ -124,10 +131,10 @@ print("\n📨 [INFO] Beginning email outreach...\n")
 for index, row in df.iterrows():
     now = datetime.now()
     if not is_within_sending_window():
-        print("⏰ [INFO] Time window passed. Stopping email sends.")
+        print("⏰ [INFO] Time window ended. Stopping email sends.")
         break
-    if sent_count >= DAILY_LIMIT:
-        print("✅ [INFO] Daily send limit reached.")
+    if sent_count >= MAX_LIMIT:
+        print("✅ [INFO] Max emails for this run reached.")
         break
 
     to_email = row.get('School Email Address')
@@ -207,16 +214,16 @@ hallhop.com – making hallways safer and smarter
         with open(LOG_FILE, 'w') as f:
             json.dump(sent_log, f, indent=2)
 
-        time.sleep(DELAY_SECONDS)
+        time.sleep(DELAY_BETWEEN_EMAILS)
 
     except smtplib.SMTPException as e:
         print(f"❌ fail: {e}")
         error_log[to_email] = str(e)
 
-# === CLOSE SMTP ===
+# === CLOSE SMTP CONNECTION ===
 server.quit()
 
-# === ERROR LOG ===
+# === ERROR LOGGING ===
 if error_log:
     with open(ERROR_LOG_FILE, 'w') as f:
         json.dump(error_log, f, indent=2)
