@@ -2,7 +2,7 @@ name: Daily HallHop Outreach
 
 on:
   schedule:
-    - cron: "0 14 * * *"  # Runs at 9:00 AM CT (14:00 UTC)
+    - cron: "0 13 * * *"  # Runs at 8:00 AM CT (13:00 UTC)
   workflow_dispatch:      # Allows manual trigger
 
 jobs:

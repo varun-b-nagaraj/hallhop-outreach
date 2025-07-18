@@ -1,14 +1,16 @@
 # === CONFIGURATION ===
-SEND_START_HOUR = 11         # Time window start (24-hr format)
-SEND_END_HOUR = 12           # Time window end (24-hr format)
-DELAY_BETWEEN_EMAILS = 10    # Delay between emails (in seconds)
-MAX_EMAILS_PER_RUN = 110      # Max emails to send in this script run
+SEND_START_HOUR = 8
+SEND_END_HOUR = 9
+DELAY_BETWEEN_EMAILS = 10
+MAX_EMAILS_PER_RUN = 150
 
 CSV_FILE = "Directory.csv"
 LOG_FILE = "sent_log.json"
+FAILED_FILE = "failed_log.json"
 ERROR_LOG_FILE = "error_log.json"
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
+IMAP_SERVER = "imap.gmail.com"
 
 # === LIBRARIES ===
 import pandas as pd
@@ -17,6 +19,8 @@ import time
 import os
 import json
 import re
+import email
+import imaplib
 from dotenv import load_dotenv
 from datetime import datetime
 from email.mime.text import MIMEText
@@ -33,119 +37,55 @@ def format_name(name):
     name = name.strip()
     if not name:
         return "Principal"
-
     name_parts = name.split()
-    if not name_parts:
-        return "Principal"
-
     prefix = name_parts[0].upper()
     last_name = name_parts[-1].capitalize()
-
-    if prefix == "MR":
-        return f"Mr. {last_name}"
-    elif prefix == "MRS":
-        return f"Mrs. {last_name}"
-    elif prefix == "MS":
-        return f"Ms. {last_name}"
-    else:
-        return "Principal"
+    return f"{'Mr.' if prefix == 'MR' else 'Mrs.' if prefix == 'MRS' else 'Ms.' if prefix == 'MS' else 'Principal'} {last_name}"
 
 def is_within_sending_window():
     now = datetime.now()
     return SEND_START_HOUR <= now.hour < SEND_END_HOUR
 
 def wait_until_start_time():
-    while True:
+    while not is_within_sending_window():
         now = datetime.now()
-        if is_within_sending_window():
-            print(f"⏰ [INFO] Within sending window ({SEND_START_HOUR}:00–{SEND_END_HOUR}:00). Starting...")
-            break
-        print(f"⏳ [WAIT] Waiting until sending window ({SEND_START_HOUR}:00–{SEND_END_HOUR}:00)... Current time: {now.strftime('%H:%M:%S')}")
+        print(f"⏳ Waiting until sending window ({SEND_START_HOUR}:00–{SEND_END_HOUR}:00)... Now: {now.strftime('%H:%M:%S')}")
         time.sleep(60)
 
-# === LOAD ENVIRONMENT ===
-load_dotenv()
-EMAIL_ADDRESS = os.getenv("EMAIL_USER")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
+def check_bounced_emails():
+    bounced = []
+    try:
+        mail = imaplib.IMAP4_SSL(IMAP_SERVER)
+        mail.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        mail.select("inbox")
+        status, messages = mail.search(None, 'SUBJECT "Delivery Status Notification"')
 
-print(f"🔐 [INFO] EMAIL_USER loaded: {'✔️' if EMAIL_ADDRESS else '❌ MISSING'}")
-print(f"🔐 [INFO] EMAIL_PASS loaded: {'✔️' if EMAIL_PASSWORD else '❌ MISSING'}")
+        for num in messages[0].split():
+            _, data = mail.fetch(num, "(RFC822)")
+            msg = email.message_from_bytes(data[0][1])
+            body = ""
 
-# === LOAD SENT LOG ===
-if os.path.exists(LOG_FILE):
-    with open(LOG_FILE, 'r') as f:
-        sent_log = json.load(f)
-    print(f"📁 [INFO] Loaded sent log with {len(sent_log)} entries")
-else:
-    sent_log = {}
-    print("📁 [INFO] No existing sent_log.json file. Starting fresh.")
+            if msg.is_multipart():
+                for part in msg.walk():
+                    if part.get_content_type() == "text/plain":
+                        body += part.get_payload(decode=True).decode(errors="ignore")
+            else:
+                body = msg.get_payload(decode=True).decode(errors="ignore")
 
-# === LOAD CONTACTS ===
-try:
-    df = pd.read_csv(CSV_FILE)
-    print(f"📋 [INFO] Loaded {len(df)} rows from {CSV_FILE}")
-except FileNotFoundError:
-    print(f"❌ [ERROR] CSV file not found: {CSV_FILE}")
-    exit(1)
+            matches = re.findall(r"(?i)Final-Recipient:.*?;\s*(\S+@\S+)", body)
+            bounced += matches
 
-df = df.drop_duplicates(subset=['School Email Address'])
-df = df[df['School Email Address'].notna()]
-df = df[df['School Email Address'].str.contains("@", na=False)]
-df = df[~df['School Email Address'].isin(sent_log.keys())]
+        mail.logout()
+    except Exception as e:
+        print(f"⚠️ [IMAP] Error checking for bounces: {e}")
+    return list(set(bounced))
 
-print(f"📬 [INFO] {len(df)} valid, unsent contacts to process")
-
-# === DAILY LIMIT ADJUSTMENT ===
-base_limit = 20
-total_days = len(set([v.get("date") for v in sent_log.values() if "date" in v]))
-DAILY_LIMIT = min(200, base_limit + total_days * 30)
-MAX_LIMIT = min(DAILY_LIMIT, MAX_EMAILS_PER_RUN)
-
-print(f"📊 [INFO] Sending window: {SEND_START_HOUR}:00–{SEND_END_HOUR}:00")
-print(f"📊 [INFO] Delay between emails: {DELAY_BETWEEN_EMAILS}s")
-print(f"📊 [INFO] Daily warm-up limit: {DAILY_LIMIT} | Max for this run: {MAX_LIMIT}")
-
-# === WAIT FOR TIME WINDOW ===
-wait_until_start_time()
-
-# === CONNECT TO SMTP SERVER ===
-print("🌐 [INFO] Connecting to SMTP server...")
-try:
-    server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
-    server.starttls()
-    server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-    print("✅ [INFO] SMTP login successful.")
-except smtplib.SMTPAuthenticationError:
-    print("❌ [ERROR] SMTP authentication failed. Check your credentials.")
-    exit(1)
-except Exception as e:
-    print(f"❌ [ERROR] SMTP connection error: {e}")
-    exit(1)
-
-# === BEGIN EMAIL OUTREACH LOOP ===
-sent_count = 0
-error_log = {}
-
-print("\n📨 [INFO] Beginning email outreach...\n")
-
-for index, row in df.iterrows():
-    now = datetime.now()
-    if not is_within_sending_window():
-        print("⏰ [INFO] Time window ended. Stopping email sends.")
-        break
-    if sent_count >= MAX_LIMIT:
-        print("✅ [INFO] Max emails for this run reached.")
-        break
-
-    to_email = row.get('School Email Address')
-    if not is_valid_email(to_email):
-        print(f"⚠️ [WARN] Skipping invalid email: {to_email}")
-        continue
-
-    principal = format_name(row.get('School Principal', '').strip())
-    school_name = row.get('School Name', '').strip().title() or "your school"
-
+def send_email(row):
+    to_email = row.get("School Email Address")
+    principal = format_name(row.get("School Principal", "").strip())
+    school_name = row.get("School Name", "").strip().title() or "your school"
     subject = f"HallHop – Digital Hall Pass for {school_name}"
+
     body_plain = f"""Dear {principal},
 
 My name is Varun, and I’m a high school junior in Round Rock and the founder of HallHop — a student-built, privacy-conscious digital hall pass system created to help schools like {school_name} modernize hallway management without needing expensive tech or complicated systems.
@@ -170,17 +110,11 @@ hallhop.com – making hallways safer and smarter
 <html>
   <body style="font-family: Arial, sans-serif; color: #333;">
     <p>Dear {principal},</p>
-
     <p>My name is Varun, and I’m a high school junior in Round Rock and the founder of <strong>HallHop</strong> — a student-built, privacy-conscious digital hall pass system created to help schools like <strong>{school_name}</strong> modernize hallway management without needing expensive tech or complicated systems.</p>
-
     <p>HallHop helps staff track hallway activity in real time, reduce disruptions, and increase student accountability — all while keeping things simple and transparent for everyone.</p>
-
     <p>I truly believe tools like this can make a meaningful difference, and I’d love to share it with your campus. You can learn more or request access at <a href="https://hallhop.com">hallhop.com</a>, or just reply to this message — I’m always happy to answer questions personally.</p>
-
     <p><em>If you'd prefer not to receive future updates, just reply with "unsubscribe".</em></p>
-
-    <p>
-      Warmly,<br>
+    <p>Warmly,<br>
       Varun Bhadurgatte Nagaraj<br>
       512-212-6269<br>
       HallHop Founder & CEO<br>
@@ -200,33 +134,121 @@ hallhop.com – making hallways safer and smarter
     msg.attach(MIMEText(body_html, 'html'))
 
     try:
-        print(f"📧 [SEND] Sending to {to_email} ... ", end='')
         server.sendmail(EMAIL_ADDRESS, to_email, msg.as_string())
-        print("✅ success")
-        sent_log[to_email] = {
-            "principal": principal,
-            "school": school_name,
-            "subject": subject,
-            "date": now.strftime("%Y-%m-%d")
+        print(f"📧 [SEND] Sent to {to_email}")
+        return True
+    except Exception as e:
+        print(f"❌ [ERROR] Failed to send to {to_email}: {e}")
+        return False
+
+# === LOAD ENV ===
+load_dotenv()
+EMAIL_ADDRESS = os.getenv("EMAIL_USER")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
+
+print(f"🔐 EMAIL_USER loaded: {'✔️' if EMAIL_ADDRESS else '❌'}")
+print(f"🔐 EMAIL_PASS loaded: {'✔️' if EMAIL_PASSWORD else '❌'}")
+
+# === LOAD LOGS ===
+sent_log = {}
+failed_log = {}
+if os.path.exists(LOG_FILE):
+    with open(LOG_FILE, 'r') as f:
+        sent_log = json.load(f)
+if os.path.exists(FAILED_FILE):
+    with open(FAILED_FILE, 'r') as f:
+        failed_log = json.load(f)
+
+# === CLEAN BOUNCES ===
+bounced = check_bounced_emails()
+print(f"📮 [INFO] Detected {len(bounced)} bounces")
+for b in bounced:
+    if b in sent_log:
+        del sent_log[b]
+        failed_log[b] = {"reason": "bounce"}
+        print(f"🧹 [CLEAN] Removed {b} from sent_log")
+
+with open(LOG_FILE, 'w') as f:
+    json.dump(sent_log, f, indent=2)
+with open(FAILED_FILE, 'w') as f:
+    json.dump(failed_log, f, indent=2)
+
+# === CONNECT SMTP ===
+print("🌐 Connecting to SMTP...")
+try:
+    server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
+    server.starttls()
+    server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+    print("✅ SMTP connected.")
+except Exception as e:
+    print(f"❌ SMTP error: {e}")
+    exit(1)
+
+# === LOAD CSV ===
+df = pd.read_csv(CSV_FILE)
+df = df.drop_duplicates(subset=['School Email Address'])
+df = df[df['School Email Address'].notna()]
+df = df[df['School Email Address'].str.contains("@", na=False)]
+df = df[~df['School Email Address'].isin(sent_log.keys())]
+
+# === WAIT FOR SEND WINDOW ===
+wait_until_start_time()
+
+# === SEND EMAILS ===
+sent_count = 0
+for _, row in df.iterrows():
+    if not is_within_sending_window():
+        print("⏰ Time window closed.")
+        break
+    if sent_count >= MAX_EMAILS_PER_RUN:
+        print("✅ Max email limit reached.")
+        break
+
+    email_address = row['School Email Address']
+    if not is_valid_email(email_address):
+        continue
+
+    if send_email(row):
+        sent_log[email_address] = {
+            "school": row.get("School Name", ""),
+            "date": datetime.now().strftime("%Y-%m-%d")
         }
         sent_count += 1
+    else:
+        failed_log[email_address] = {"reason": "send_error"}
 
-        with open(LOG_FILE, 'w') as f:
-            json.dump(sent_log, f, indent=2)
+    with open(LOG_FILE, 'w') as f:
+        json.dump(sent_log, f, indent=2)
+    with open(FAILED_FILE, 'w') as f:
+        json.dump(failed_log, f, indent=2)
 
-        time.sleep(DELAY_BETWEEN_EMAILS)
+    time.sleep(DELAY_BETWEEN_EMAILS)
 
-    except smtplib.SMTPException as e:
-        print(f"❌ fail: {e}")
-        error_log[to_email] = str(e)
+# === RETRY FAILED EMAILS ===
+print("\n🔁 Retrying failed emails (not counted toward limit)...")
+retry_df = pd.read_csv(CSV_FILE)
+retry_df = retry_df[retry_df['School Email Address'].isin(failed_log.keys())]
 
-# === CLOSE SMTP CONNECTION ===
+for _, row in retry_df.iterrows():
+    email_address = row['School Email Address']
+    if email_address in sent_log:
+        continue
+
+    if send_email(row):
+        sent_log[email_address] = {
+            "school": row.get("School Name", ""),
+            "date": datetime.now().strftime("%Y-%m-%d")
+        }
+        del failed_log[email_address]
+        print(f"✅ Retry succeeded: {email_address}")
+    else:
+        print(f"❌ Retry failed: {email_address}")
+
+    with open(LOG_FILE, 'w') as f:
+        json.dump(sent_log, f, indent=2)
+    with open(FAILED_FILE, 'w') as f:
+        json.dump(failed_log, f, indent=2)
+
+# === CLOSE SMTP ===
 server.quit()
-
-# === ERROR LOGGING ===
-if error_log:
-    with open(ERROR_LOG_FILE, 'w') as f:
-        json.dump(error_log, f, indent=2)
-    print(f"\n⚠️ [INFO] Some emails failed. See {ERROR_LOG_FILE} for details.")
-
-print(f"\n🎉 [DONE] Finished. {sent_count} emails sent.")
+print(f"\n🎉 DONE: Sent {sent_count} new emails. Retried {len(retry_df)} failures.")
